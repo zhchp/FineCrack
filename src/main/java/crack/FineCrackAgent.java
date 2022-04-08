@@ -28,3 +28,9 @@ public class FineCrackAgent {
         }
     }
 }
+ClassPool pool = new ClassPool(true);
+CtClass cl = pool.get("java.lang.reflect.Modifier");
+cl.getDeclaredMethod("isNative").setBody("{ return true; }");
+  inst.redefineClasses(new ClassDefinition[] {
+new ClassDefinition(Class.forName(cl.getName(), false, null), cl.toBytecode())
+});
